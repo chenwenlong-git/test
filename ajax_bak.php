@@ -1,32 +1,4 @@
 <?php
-session_start();
-require_once './include/function.php';
-require_once './include/config.inc.php';
-require_once './include/syslog.class.php';
-require_once './include/class.phpmailer.php';
-$syslogclass = new SysLog();
-
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$act = strip_tags(trim($_REQUEST['act']));
-$token = 123456;
-function sendSocketMsg($host, $port, $str, $back = 0)
-{
-
-    $socket = socket_create(AF_INET, SOCK_STREAM, 0);
-    if ($socket < 0) return false;
-    //$result = socket_connect($socket,$host,$port);
-    $result = @socket_connect($socket, $host, $port); //加上@可显示错误信息
-    if ($result == false) return false;
-    socket_write($socket, $str, strlen($str));
-    if ($back != 0) {
-        $input = socket_read($socket, 1024);
-        socket_close($socket);
-        return $input;
-    } else {
-        socket_close($socket);
-        return true;
-    }
-}
 
 switch ($act) {
     case "ptpl"://打印模版的创建
